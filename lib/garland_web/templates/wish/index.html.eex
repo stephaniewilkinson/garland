@@ -1,0 +1,36 @@
+<h1>Listing Wishes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Note</th>
+      <th>Quantity</th>
+      <th>Title</th>
+      <th>Url</th>
+      <th>Bought</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for wish <- @wishes do %>
+    <tr>
+      <td><%= wish.image %></td>
+      <td><%= wish.note %></td>
+      <td><%= wish.quantity %></td>
+      <td><%= wish.title %></td>
+      <td><%= wish.url %></td>
+      <td><%= wish.bought %></td>
+
+      <td>
+        <%= link "Show", to: Routes.user_wish_path(@conn, :show, wish, @user) %>
+        <%= link "Edit", to: Routes.user_wish_path(@conn, :edit, wish, @user) %>
+        <%= link "Delete", to: Routes.user_wish_path(@conn, :delete, wish, @user), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Wish", to: Routes.user_wish_path(@conn, :new, @user) %></span>

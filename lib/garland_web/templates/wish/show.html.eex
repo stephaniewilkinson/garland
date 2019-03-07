@@ -1,0 +1,38 @@
+<h1>Show Wish</h1>
+
+<ul>
+
+  <li>
+    <strong>Image:</strong>
+    <%= @wish.image %>
+  </li>
+
+  <li>
+    <strong>Note:</strong>
+    <%= @wish.note %>
+  </li>
+
+  <li>
+    <strong>Quantity:</strong>
+    <%= @wish.quantity %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @wish.title %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @wish.url %>
+  </li>
+
+  <li>
+    <strong>Bought:</strong>
+    <%= @wish.bought %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.user_wish_path(@conn, :edit, @wish, @user) %></span>
+<span><%= link "Back", to: Routes.user_wish_path(@conn, :index, @user) %></span>
