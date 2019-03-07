@@ -18,7 +18,7 @@ defmodule Garland.Accounts.Wish do
   @doc false
   def changeset(wish, attrs) do
     wish
-    |> cast(attrs, [:image, :note, :quantity, :title, :url, :bought])
-    |> validate_required([:image, :note, :quantity, :title, :url, :bought])
+    |> cast(attrs, [:image, :note, :quantity, :title, :url, :bought, :user_id])
+    |> validate_required([:image, :note, :quantity, :title, :url, :bought, :user_id])
   end
 end

@@ -4,47 +4,57 @@ defmodule GarlandWeb.WishController do
   alias Garland.Accounts
   alias Garland.Accounts.Wish
 
-  def index(conn, _params, _user) do
-    wishes = Accounts.list_wishes()
-    render(conn, "index.html", wishes: wishes)
+  def action(conn, _) do
+    user = Accounts.get_user!(conn.params["user_id"])
+    args = [conn, conn.params, user]
+    apply(__MODULE__, action_name(conn), args)
   end
 
-  def new(conn, _params, _user) do
+  def index(conn, _params, user) do
+    wishes = Accounts.list_wishes(user)
+    render(conn, "index.html", user: user, wishes: wishes)
+  end
+
+  def new(conn, _params, user) do
     changeset = Accounts.change_wish(%Wish{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, user: user)
   end
 
-  def create(conn, %{"wish" => wish_params}, _user) do
+  def create(conn, %{"wish" => wish_params}, user) do
+    wish_params =
+      wish_params
+      |> Map.put("user_id", user.id)
+
     case Accounts.create_wish(wish_params) do
       {:ok, wish} ->
         conn
         |> put_flash(:info, "Wish created successfully.")
-        |> redirect(to: Routes.user_wish_path(conn, :show, wish))
+        |> redirect(to: Routes.user_wish_path(conn, :show, user, wish))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, user: user)
     end
   end
 
-  def show(conn, %{"id" => id}, _user) do
+  def show(conn, %{"id" => id}, user) do
     wish = Accounts.get_wish!(id)
-    render(conn, "show.html", wish: wish)
+    render(conn, "show.html", wish: wish, user: user)
   end
 
-  def edit(conn, %{"id" => id}, _user) do
+  def edit(conn, %{"id" => id}, user) do
     wish = Accounts.get_wish!(id)
     changeset = Accounts.change_wish(wish)
-    render(conn, "edit.html", wish: wish, changeset: changeset)
+    render(conn, "edit.html", wish: wish, changeset: changeset, user: user)
   end
 
-  def update(conn, %{"id" => id, "wish" => wish_params}, _user) do
+  def update(conn, %{"id" => id, "wish" => wish_params}, user) do
     wish = Accounts.get_wish!(id)
 
     case Accounts.update_wish(wish, wish_params) do
       {:ok, wish} ->
         conn
         |> put_flash(:info, "Wish updated successfully.")
-        |> redirect(to: Routes.user_wish_path(conn, :show, wish))
+        |> redirect(to: Routes.user_wish_path(conn, :show, user, wish))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", wish: wish, changeset: changeset)

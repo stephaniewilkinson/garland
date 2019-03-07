@@ -117,8 +117,10 @@ defmodule Garland.Accounts do
       [%Wish{}, ...]
 
   """
-  def list_wishes do
-    Repo.all(Wish)
+  def list_wishes(user) do
+    Wish
+    |> where([wish], wish.user_id == ^user.id)
+    |> Repo.all()
   end
 
   @doc """
