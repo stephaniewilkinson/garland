@@ -30,6 +30,6 @@
   <%= error_tag f, :bought %>
 
   <div>
-    <%= submit "Save" %>
+    <%= submit "Save", phx_disable_with: "Saving..." %>
   </div>
 <% end %>

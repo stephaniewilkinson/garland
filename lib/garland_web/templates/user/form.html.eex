@@ -22,6 +22,6 @@
   <%= error_tag f, :picture %>
 
   <div>
-    <%= submit "Save" %>
+    <%= submit "Save", phx_disable_with: "Saving..." %>
   </div>
 <% end %>

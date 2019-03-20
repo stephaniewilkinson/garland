@@ -3,6 +3,7 @@ defmodule GarlandWeb.WishController do
 
   alias Garland.Accounts
   alias Garland.Accounts.Wish
+  alias Phoenix.LiveView
 
   def action(conn, _) do
     user = Accounts.get_user!(conn.params["user_id"])
@@ -16,6 +17,7 @@ defmodule GarlandWeb.WishController do
   end
 
   def new(conn, _params, user) do
+    LiveView.Controller.live_render(conn, Garland.WishFetcherView, session: %{})
     changeset = Accounts.change_wish(%Wish{})
     render(conn, "new.html", changeset: changeset, user: user)
   end

@@ -52,7 +52,8 @@ config :garland, GarlandWeb.Endpoint,
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/garland_web/views/.*(ex)$},
-      ~r{lib/garland_web/templates/.*(eex)$}
+      ~r{lib/garland_web/templates/.*(eex)$},
+      ~r{lib/garland/live/.*(ex)$}
     ]
   ]
 
