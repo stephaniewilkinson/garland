@@ -17,9 +17,9 @@ defmodule GarlandWeb.WishController do
   end
 
   def new(conn, _params, user) do
-    LiveView.Controller.live_render(conn, Garland.WishFetcherView, session: %{})
     changeset = Accounts.change_wish(%Wish{})
-    render(conn, "new.html", changeset: changeset, user: user)
+    # render(conn, "new.html", changeset: changeset, user: user)
+    LiveView.Controller.live_render(conn, GarlandWeb.WishFetcherView, session: %{})
   end
 
   def create(conn, %{"wish" => wish_params}, user) do
